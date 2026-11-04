@@ -8,7 +8,7 @@
 | **Modelo** | `qwen2.5:3b` (cuantizado Q4, ~1,9 GB), ejecutado en CPU con Ollama. Los datos nunca salen de la máquina. |
 | **Skills** | `catalogar_libro` · `recomendar_libros` · `gestionar_prestamo` |
 | **Dimensiones complementarias** | ✅ Pruebas unitarias · ✅ Pruebas integradas · ✅ Seguridad / AppSec · ✅ Documentación técnica |
-| **Tests** | 179 pruebas (unitarias + integradas, 98 % de cobertura) + 7 contra el modelo real |
+| **Tests** | 179 pruebas (unitarias + integradas, 98 % de cobertura) + 8 contra el modelo real |
 
 ---
 
@@ -181,7 +181,7 @@ Se probaron los dos con el mismo pedido. El 1.5B inventó el autor ("Carmen Nava
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -v --cov=bibliotecario      # 179 tests (≈15 s)
-.\.venv\Scripts\python.exe -m pytest -m ollama -v                # 7 tests contra el modelo real (≈1 min)
+.\.venv\Scripts\python.exe -m pytest -m ollama -v                # 8 tests contra el modelo real (≈1 min)
 ```
 
 | Suite | Tipo | Qué valida |
@@ -194,7 +194,7 @@ Se probaron los dos con el mismo pedido. El 1.5B inventó el autor ("Carmen Nava
 | `integracion/test_ollama_http.py` | Integrada (mocks) | Contrato HTTP con `/api/chat`: el payload lleva `format`, `options` y `keep_alive` del `.md`; errores de red y HTTP |
 | `integracion/test_api_biblioteca.py` | Integrada (**API real**) | Express y SQLite en una base temporal: alta, 409, 400 por campo, préstamo/devolución, **inyección SQL guardada como texto literal** |
 | `integracion/test_flujo_agente.py` | Integrada (**API real**) | De punta a punta: pedido → skill → confirmación → base; cancelar no escribe; la inyección no toca la base |
-| `integracion/test_ollama_real.py` | Integrada (**Ollama real**) | El enrutador acierta 5 de 5 pedidos; la extracción es **determinista** en dos corridas; las recomendaciones solo usan ids reales |
+| `integracion/test_ollama_real.py` | Integrada (**Ollama real**) | El enrutador acierta 5 de 5 pedidos; la extracción es **determinista** en dos corridas; las recomendaciones solo usan ids reales y no copian los ids del ejemplo few-shot |
 
 Todas las pruebas siguen el patrón **AAA** (`# Arrange / # Act / # Assert`) y usan `pytest.raises(..., match=...)` para las excepciones. La evidencia de consola está en [docs/evidencia_pytest.txt](docs/evidencia_pytest.txt).
 

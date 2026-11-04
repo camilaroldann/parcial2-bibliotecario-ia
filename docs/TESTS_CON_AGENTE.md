@@ -37,9 +37,10 @@ veces (409) y un payload de inyección SQL que debe guardarse como texto literal
 src/bibliotecario/skills.py.
 ```
 
-## Hallazgo real de las pruebas
+## Hallazgos reales de las pruebas
 
-El caso `'[{"skill": "x"}]'` de `test_extraer_json_respuestas_invalidas_lanzan_error` **falló en la primera corrida**. Cuando el modelo respondía con un *array*, `extraer_json` tomaba el objeto de adentro en lugar de rechazar la respuesta. Se corrigió `llm.extraer_json` para que primero intente parsear la respuesta completa y la rechace si no es un objeto.
+1. **Respuesta con array.** El caso `'[{"skill": "x"}]'` de `test_extraer_json_respuestas_invalidas_lanzan_error` **falló en la primera corrida**. Cuando el modelo respondía con un *array*, `extraer_json` tomaba el objeto de adentro en lugar de rechazar la respuesta. Se corrigió `llm.extraer_json` para que primero intente parsear la respuesta completa y la rechace si no es un objeto.
+2. **El modelo copiaba los ids del ejemplo few-shot.** Al probar el agente con el catálogo real, *"Recomendame algo de ciencia ficción"* devolvía *Ficciones* (cuentos). El ejemplo de `recomendar_libros.skill.md` usaba el id 3 para *Fahrenheit 451*, y el modelo de 3B copiaba ese 3, que en la base real es *Ficciones*. El test existente no lo había detectado porque en `CATALOGO_EJEMPLO` el id 3 también era *Fahrenheit 451*. Se agregó `test_recomendacion_real_no_copia_ids_del_ejemplo_few_shot`, que usa el catálogo del seed con sus ids reales: **falla con el prompt viejo** y pasa una vez que los ids del ejemplo se cambiaron por 101, 102 y 103, que no existen en ningún catálogo. Si el modelo los copia igual, el filtro de ids inventados los descarta. La lección es que en los ejemplos few-shot no conviene usar valores que puedan coincidir con datos reales.
 
 ## Cómo ejecutarlas
 

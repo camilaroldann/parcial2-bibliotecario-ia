@@ -5,7 +5,7 @@ rootdir: C:\Users\camir\OneDrive\Documentos\IA Generativa\parcial2-bibliotecario
 configfile: pytest.ini
 testpaths: tests
 plugins: anyio-4.16.0, cov-7.1.0
-collecting ... collected 186 items / 7 deselected / 179 selected
+collecting ... collected 187 items / 8 deselected / 179 selected
 
 tests/integracion/test_api_biblioteca.py::test_alta_y_listado_ordenado_por_autor PASSED [  0%]
 tests/integracion/test_api_biblioteca.py::test_duplicado_con_otra_capitalizacion_devuelve_409 PASSED [  1%]
@@ -202,7 +202,7 @@ src\bibliotecario\skills.py             188     10    95%   132-135, 140-143, 16
 src\bibliotecario\validacion.py          81      0   100%
 -------------------------------------------------------------------
 TOTAL                                   601     15    98%
-===================== 179 passed, 7 deselected in 15.19s ======================
+===================== 179 passed, 8 deselected in 16.62s ======================
 
 ### pytest -m ollama -v   (modelo real qwen2.5:3b)
 ============================= test session starts =============================
@@ -211,14 +211,15 @@ rootdir: C:\Users\camir\OneDrive\Documentos\IA Generativa\parcial2-bibliotecario
 configfile: pytest.ini
 testpaths: tests
 plugins: anyio-4.16.0, cov-7.1.0
-collecting ... collected 186 items / 179 deselected / 7 selected
+collecting ... collected 187 items / 179 deselected / 8 selected
 
-tests/integracion/test_ollama_real.py::test_enrutador_real_elige_la_skill_correcta[Cargá Los siete locos de Roberto Arlt, novela, 1929-catalogar_libro] PASSED [ 14%]
-tests/integracion/test_ollama_real.py::test_enrutador_real_elige_la_skill_correcta[Recomendame algo de ciencia ficción-recomendar_libros] PASSED [ 28%]
-tests/integracion/test_ollama_real.py::test_enrutador_real_elige_la_skill_correcta[Me llevo Rayuela-gestionar_prestamo] PASSED [ 42%]
-tests/integracion/test_ollama_real.py::test_enrutador_real_elige_la_skill_correcta[Devolvieron El Aleph-gestionar_prestamo] PASSED [ 57%]
-tests/integracion/test_ollama_real.py::test_enrutador_real_elige_la_skill_correcta[¿Qué hora es en Tokio?-ninguna] PASSED [ 71%]
-tests/integracion/test_ollama_real.py::test_extraccion_real_es_determinista PASSED [ 85%]
-tests/integracion/test_ollama_real.py::test_recomendacion_real_solo_usa_ids_del_catalogo PASSED [100%]
+tests/integracion/test_ollama_real.py::test_enrutador_real_elige_la_skill_correcta[Cargá Los siete locos de Roberto Arlt, novela, 1929-catalogar_libro] PASSED [ 12%]
+tests/integracion/test_ollama_real.py::test_enrutador_real_elige_la_skill_correcta[Recomendame algo de ciencia ficción-recomendar_libros] PASSED [ 25%]
+tests/integracion/test_ollama_real.py::test_enrutador_real_elige_la_skill_correcta[Me llevo Rayuela-gestionar_prestamo] PASSED [ 37%]
+tests/integracion/test_ollama_real.py::test_enrutador_real_elige_la_skill_correcta[Devolvieron El Aleph-gestionar_prestamo] PASSED [ 50%]
+tests/integracion/test_ollama_real.py::test_enrutador_real_elige_la_skill_correcta[¿Qué hora es en Tokio?-ninguna] PASSED [ 62%]
+tests/integracion/test_ollama_real.py::test_extraccion_real_es_determinista PASSED [ 75%]
+tests/integracion/test_ollama_real.py::test_recomendacion_real_solo_usa_ids_del_catalogo PASSED [ 87%]
+tests/integracion/test_ollama_real.py::test_recomendacion_real_no_copia_ids_del_ejemplo_few_shot PASSED [100%]
 
-================ 7 passed, 179 deselected in 68.01s (0:01:08) =================
+================ 8 passed, 179 deselected in 74.42s (0:01:14) =================

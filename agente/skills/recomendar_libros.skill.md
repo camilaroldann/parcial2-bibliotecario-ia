@@ -62,12 +62,12 @@ Elegir **hasta 3 libros del catálogo** que mejor encajen con las preferencias d
 # Ejemplo
 Catálogo:
 ```
-3 | Fahrenheit 451 | Ray Bradbury | Ciencia ficción | 1953
-7 | Rayuela | Julio Cortázar | Novela | 1963
-9 | La invención de Morel | Adolfo Bioy Casares | Ciencia ficción | 1940
+101 | Fahrenheit 451 | Ray Bradbury | Ciencia ficción | 1953
+102 | Rayuela | Julio Cortázar | Novela | 1963
+103 | La invención de Morel | Adolfo Bioy Casares | Ciencia ficción | 1940
 ```
 Entrada: `quiero algo de ciencia ficción`
-Salida: `{"recomendaciones": [{"id": 3, "motivo": "Clásico de ciencia ficción distópica de Bradbury."}, {"id": 9, "motivo": "Ciencia ficción argentina de Bioy Casares."}], "mensaje": "Te recomiendo estos libros de ciencia ficción disponibles:"}`
+Salida: `{"recomendaciones": [{"id": 101, "motivo": "Clásico de ciencia ficción distópica de Bradbury."}, {"id": 103, "motivo": "Ciencia ficción argentina de Bioy Casares."}], "mensaje": "Te recomiendo estos libros de ciencia ficción disponibles:"}`
 
 # Restricciones
 - Máximo 3 recomendaciones, sin repetir libros.
