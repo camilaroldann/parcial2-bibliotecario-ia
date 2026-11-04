@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bibliotecario IA · Arquitectura</title>
+<style>
+  :root { --bg:#0f1220; --panel:#181c30; --line:#3a4170; --txt:#e8eaf6; --mut:#9aa3c7;
+          --a:#7c9cff; --b:#ff8fb1; --c:#5ee0b5; --d:#ffd166; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); font:16px/1.4 "Segoe UI", system-ui, sans-serif;
+         min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px; }
+  h1 { margin:0 0 4px; font-size:30px; letter-spacing:.3px; }
+  p.sub { margin:0 0 22px; color:var(--mut); }
+  svg { width:min(1180px, 100%); height:auto; }
+  .box { fill:var(--panel); stroke:var(--line); stroke-width:1.5; }
+  .t { fill:var(--txt); font-size:15px; font-weight:600; }
+  .s { fill:var(--mut); font-size:12.5px; }
+  .k { font-size:12px; font-weight:700; }
+  .arrow { stroke:var(--mut); stroke-width:1.6; fill:none; marker-end:url(#m); }
+  .lbl { fill:var(--mut); font-size:11.5px; }
+  .legend { display:flex; gap:22px; flex-wrap:wrap; justify-content:center; margin-top:14px; color:var(--mut); font-size:13px; }
+  .legend i { display:inline-block; width:11px; height:11px; border-radius:3px; margin-right:6px; vertical-align:-1px; }
+</style>
+</head>
+<body>
+<h1>📚 Bibliotecario IA</h1>
+<p class="sub">Agente local (Ollama) · skills declarativas en Markdown · API de la Biblioteca Virtual (Portfolio 1)</p>
+
+<svg viewBox="0 0 1180 560" role="img" aria-label="Diagrama de arquitectura del Bibliotecario IA">
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9aa3c7"/>
+    </marker>
+  </defs>
+
+  <!-- Usuario + UI -->
+  <rect class="box" x="20" y="225" width="150" height="90" rx="12"/>
+  <text class="t" x="95" y="260" text-anchor="middle">👤 Usuario</text>
+  <text class="s" x="95" y="282" text-anchor="middle">"me llevo Rayuela"</text>
+
+  <rect class="box" x="210" y="225" width="150" height="90" rx="12" style="stroke:var(--b)"/>
+  <text class="t" x="285" y="258" text-anchor="middle">Streamlit</text>
+  <text class="s" x="285" y="279" text-anchor="middle">app.py · chat</text>
+  <text class="s" x="285" y="297" text-anchor="middle">confirmar ✔ / ✖</text>
+  <path class="arrow" d="M170 270 H206"/>
+
+  <!-- Agente -->
+  <rect x="395" y="30" width="470" height="500" rx="16" fill="none" stroke="var(--a)" stroke-width="2" stroke-dasharray="6 5"/>
+  <text class="k" x="415" y="56" fill="var(--a)">AGENTE · bibliotecario.agent.md</text>
+  <path class="arrow" d="M360 270 H408"/>
+
+  <rect class="box" x="415" y="75" width="430" height="58" rx="10"/>
+  <text class="t" x="432" y="99">① Seguridad de entrada</text>
+  <text class="s" x="432" y="120">sanitizar (≤500) · filtro prompt-injection · si bloquea, no llama al LLM</text>
+
+  <rect class="box" x="415" y="150" width="430" height="58" rx="10"/>
+  <text class="t" x="432" y="174">② Enrutador LLM</text>
+  <text class="s" x="432" y="195">temperature 0.0 · seed 42 · enum de skills (o comando /catalogar)</text>
+  <path class="arrow" d="M630 133 V146"/>
+
+  <!-- Skills -->
+  <rect class="box" x="415" y="228" width="136" height="80" rx="10" style="stroke:var(--c)"/>
+  <text class="t" x="483" y="256" text-anchor="middle">catalogar</text>
+  <text class="s" x="483" y="276" text-anchor="middle">T 0.1 · ctx 2048</text>
+  <text class="s" x="483" y="294" text-anchor="middle">tools: crear_libro</text>
+
+  <rect class="box" x="562" y="228" width="136" height="80" rx="10" style="stroke:var(--c)"/>
+  <text class="t" x="630" y="256" text-anchor="middle">recomendar</text>
+  <text class="s" x="630" y="276" text-anchor="middle">T 0.3 · ctx 4096</text>
+  <text class="s" x="630" y="294" text-anchor="middle">tools: listar_libros</text>
+
+  <rect class="box" x="709" y="228" width="136" height="80" rx="10" style="stroke:var(--c)"/>
+  <text class="t" x="777" y="256" text-anchor="middle">préstamo</text>
+  <text class="s" x="777" y="276" text-anchor="middle">T 0.0 · ctx 2048</text>
+  <text class="s" x="777" y="294" text-anchor="middle">tools: listar · cambiar</text>
+  <path class="arrow" d="M630 208 V224"/>
+  <text class="lbl" x="640" y="221">③ *.skill.md</text>
+
+  <rect class="box" x="415" y="328" width="430" height="58" rx="10"/>
+  <text class="t" x="432" y="352">④ Validación determinista (Python)</text>
+  <text class="s" x="432" y="373">reglas de la API · ids contra catálogo real · año 48 → 1948 · sin inventar</text>
+  <path class="arrow" d="M630 308 V324"/>
+
+  <rect class="box" x="415" y="403" width="430" height="58" rx="10"/>
+  <text class="t" x="432" y="427">⑤ Herramientas con permisos + confirmación</text>
+  <text class="s" x="432" y="448">solo las tools declaradas · PermisoDenegado · requires_confirmation</text>
+  <path class="arrow" d="M630 386 V399"/>
+
+  <text class="s" x="432" y="500">El modelo decide y Python verifica.</text>
+
+  <!-- Ollama -->
+  <rect class="box" x="935" y="120" width="225" height="130" rx="12" style="stroke:var(--d)"/>
+  <text class="t" x="1047" y="152" text-anchor="middle">🦙 Ollama local</text>
+  <text class="s" x="1047" y="176" text-anchor="middle">qwen2.5:3b · Q4 · ~1,9 GB</text>
+  <text class="s" x="1047" y="196" text-anchor="middle">localhost:11434 /api/chat</text>
+  <text class="s" x="1047" y="216" text-anchor="middle">format = JSON Schema</text>
+  <text class="s" x="1047" y="236" text-anchor="middle">keep_alive 10m · CPU</text>
+  <path class="arrow" d="M845 179 H931"/>
+  <path class="arrow" d="M845 268 C890 268 890 215 931 215"/>
+
+  <!-- API -->
+  <rect class="box" x="935" y="350" width="225" height="110" rx="12" style="stroke:var(--b)"/>
+  <text class="t" x="1047" y="381" text-anchor="middle">API Biblioteca Virtual</text>
+  <text class="s" x="1047" y="403" text-anchor="middle">Node · Express · localhost:3000</text>
+  <text class="s" x="1047" y="423" text-anchor="middle">GET · POST · PATCH /estado</text>
+  <text class="s" x="1047" y="443" text-anchor="middle">valida otra vez (400 / 409)</text>
+  <path class="arrow" d="M845 432 H931"/>
+
+  <rect class="box" x="985" y="480" width="125" height="52" rx="10"/>
+  <text class="t" x="1047" y="503" text-anchor="middle">SQLite</text>
+  <text class="s" x="1047" y="521" text-anchor="middle">SQL parametrizado</text>
+  <path class="arrow" d="M1047 460 V476"/>
+</svg>
+
+<div class="legend">
+  <span><i style="background:var(--a)"></i>Agente (.agent.md)</span>
+  <span><i style="background:var(--c)"></i>Skills (.skill.md)</span>
+  <span><i style="background:var(--d)"></i>Modelo local</span>
+  <span><i style="background:var(--b)"></i>Portfolio 1 + UI</span>
+</div>
+</body>
+</html>

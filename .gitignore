@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+biblioteca-virtual/node_modules/
+biblioteca-virtual/db/*.db
+biblioteca-virtual/db/*.db-shm
+biblioteca-virtual/db/*.db-wal
+.claude/
